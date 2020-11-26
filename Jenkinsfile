@@ -13,18 +13,39 @@ pipeline {
       }
     }
 
-    stage('test') {
-      steps {
-        echo "blueocean build URL is ${env.RUN_DISPLAY_URL}"
+    stage('deploy') {
+      parallel {
+        stage('deploy') {
+          steps {
+            sh 'php -dmemory_limit=2G bin/magento s:s:d -f'
+          }
+        }
 
+        stage('compile') {
+          steps {
+            sh 'php -dmemory_limit=2G bin/magento s:d:comp'
+          }
+        }
+
+      }
     }
-  }
 
-  stage('finish') {
-    steps {
-      cleanWs(cleanWhenSuccess: true, cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true, disableDeferredWipeout: true)
+    stage('finish') {
+      parallel {
+        stage('clear dir') {
+          steps {
+            cleanWs(cleanWhenSuccess: true, cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true, disableDeferredWipeout: true)
+          }
+        }
+
+        stage('build url ') {
+          steps {
+            echo '"blueocean build URL is ${env.RUN_DISPLAY_URL}"'
+          }
+        }
+
+      }
     }
-  }
 
-}
+  }
 }
