@@ -17,13 +17,13 @@ pipeline {
       parallel {
         stage('deploy') {
           steps {
-            sh 'php -dmemory_limit=3G bin/magento s:s:d'
+            sh 'php -dmemory_limit=2G bin/magento s:s:d -f'
           }
         }
 
         stage('compile') {
           steps {
-            sh 'php -dmemory_limit=3G bin/magento s:d:comp'
+            sh 'php -dmemory_limit=2G bin/magento s:d:comp'
           }
         }
 
