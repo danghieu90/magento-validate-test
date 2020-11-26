@@ -17,7 +17,7 @@ pipeline {
       parallel {
         stage('deploy') {
           steps {
-            sh 'php -dmemory_limit=2G bin/magento s:s:d -f'
+            sh 'php -dmemory_limit=2G bin/magento s:s:d -f -j=2'
           }
         }
 
@@ -40,7 +40,7 @@ pipeline {
 
         stage('build url ') {
           steps {
-            echo '"blueocean build URL is ${env.RUN_DISPLAY_URL}"'
+            echo "blueocean build URL is ${env.RUN_DISPLAY_URL}"
           }
         }
 
