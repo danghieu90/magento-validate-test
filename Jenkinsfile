@@ -51,14 +51,15 @@ pipeline {
         echo "blueocean build URL is ${env.RUN_DISPLAY_URL}"
         script {
           def userInput = input(message: 'Success or error ?',
-          parameters: [[$class: 'ChoiceParameterDefinition',
-          description:'describing choices', name:'nameChoice', choices: "Success\nError"]
-        ])
+            parameters: [[$class: 'ChoiceParameterDefinition',
+            description:'describing choices', name:'nameChoice', choices: "Success\nError"]
+          ])
 
-        if( "${userInput}" == "Success"){
-          currentBuild.result = 'SUCCESS'
-        } else {
-          currentBuild.result = 'FAILURE'
+          if( "${userInput}" == "Success"){
+            currentBuild.result = 'SUCCESS'
+          } else {
+            currentBuild.result = 'FAILURE'
+          }
         }
       }
     }
