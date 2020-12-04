@@ -44,7 +44,24 @@ pipeline {
             }
         }
     }
-      
+
+    stage('finish') {
+      parallel {
+        stage('clear dir') {
+          steps {
+            cleanWs(cleanWhenSuccess: true, cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true, disableDeferredWipeout: true)
+          }
+        }
+
+        stage('build url ') {
+          steps {
+            echo "blueocean build URL is ${env.RUN_DISPLAY_URL}"
+          }
+        }
+
+      }
+    }
+
     stage('test') {
       steps {
         echo "build URL is ${env.BUILD_URL}"
@@ -61,23 +78,6 @@ pipeline {
             currentBuild.result = 'FAILURE'
           }
         }
-      }
-    }
-
-    stage('finish') {
-      parallel {
-        stage('clear dir') {
-          steps {
-            cleanWs(cleanWhenSuccess: true, cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true, disableDeferredWipeout: true)
-          }
-        }
-
-        stage('build url ') {
-          steps {
-            echo "blueocean build URL is ${env.RUN_DISPLAY_URL}"
-          }
-        }
-
       }
     }
 
