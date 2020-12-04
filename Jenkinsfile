@@ -37,9 +37,9 @@ pipeline {
                 publisher.publishLastChanges()
                 def changes = publisher.getLastChanges()
                 for (commit in changes.getCommits()) {
-                  println(commit)
                   def commitInfo = commit.getCommitInfo()
                   println(commitInfo)
+                  println(commitInfo.getCommitId())
                 }
             }
         }
