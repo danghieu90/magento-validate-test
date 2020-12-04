@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('init') {
       steps {
-        sh 'pwdsnn && whoami && id -u && id -g'
+        sh 'pwd && whoami && id -u && id -g'
         sh 'composer install'
       }
     }
