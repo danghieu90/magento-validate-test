@@ -1,9 +1,3 @@
-if (currentBuild.rawBuild.getCauses().toString().contains('BranchIndexingCause')) {
-  print "INFO: Build skipped due to trigger being Branch Indexing"
-  currentBuild.result = 'ABORTED'
-  return
-}
-
 pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
