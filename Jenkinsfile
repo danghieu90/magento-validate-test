@@ -4,7 +4,7 @@ pipeline {
   }
   agent {
     docker {
-      image 'codecheck:latest'
+      image 'jenkin_codecheck:latest'
     }
 
   }
