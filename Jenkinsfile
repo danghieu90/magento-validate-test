@@ -11,7 +11,7 @@ pipeline {
   stages {
     stage('init') {
       steps {
-        sh 'pwd && whoami && id -u && id -g'
+        sh 'pwd && whoami && id -u && id -g && composer global require hirak/prestissimo'
         sh 'composer install'
       }
     }
