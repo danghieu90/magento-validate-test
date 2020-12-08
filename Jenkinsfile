@@ -11,8 +11,8 @@ pipeline {
   stages {
     stage('init') {
       steps {
-        sh 'composer global require hirak/prestissimo'
-        sh 'composer install'
+        sh 'COMPOSER_MEMORY_LIMIT=-1 composer global require hirak/prestissimo'
+        sh 'COMPOSER_MEMORY_LIMIT=-1 composer install'
         sh 'COMPOSER_MEMORY_LIMIT=-1 composer require --dev phpro/grumphp'
         sh 'cp -rf /codecheck/grumphp.yml  grumphp.yml'
       }
@@ -76,18 +76,18 @@ pipeline {
       steps {
         echo "build URL is ${env.BUILD_URL}"
         echo "blueocean build URL is ${env.RUN_DISPLAY_URL}"
-        script {
-          def userInput = input(message: 'Success or error ?',
-            parameters: [[$class: 'ChoiceParameterDefinition',
-            description:'describing choices', name:'nameChoice', choices: "Success\nError"]
-          ])
+        // script {
+        //   def userInput = input(message: 'Success or error ?',
+        //     parameters: [[$class: 'ChoiceParameterDefinition',
+        //     description:'describing choices', name:'nameChoice', choices: "Success\nError"]
+        //   ])
 
-          if( "${userInput}" == "Success"){
-            currentBuild.result = 'SUCCESS'
-          } else {
-            currentBuild.result = 'FAILURE'
-          }
-        }
+        //   if( "${userInput}" == "Success"){
+        //     currentBuild.result = 'SUCCESS'
+        //   } else {
+        //     currentBuild.result = 'FAILURE'
+        //   }
+        // }
       }
     }
 
