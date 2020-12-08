@@ -11,9 +11,9 @@ pipeline {
   stages {
     stage('init') {
       steps {
-        sh 'COMPOSER_MEMORY_LIMIT=-1 composer global require hirak/prestissimo'
+        sh '#COMPOSER_MEMORY_LIMIT=-1 composer global require hirak/prestissimo'
         sh 'composer install'
-        sh 'COMPOSER_MEMORY_LIMIT=-1 composer global require --dev phpro/grumphp'
+        sh '#COMPOSER_MEMORY_LIMIT=-1 composer global require --dev phpro/grumphp'
         sh 'cp -rf /codecheck/grumphp.yml  grumphp.yml'
       }
     }
