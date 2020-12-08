@@ -41,13 +41,15 @@ pipeline {
                 def changes = publisher.getLastChanges()
                 for (commit in changes.getCommits()) {
                   def commitInfo = commit.getCommitInfo()
+                  def commitInfoId = commitInfo.getCommitId()
                   println(commitInfo)
-                  println(commitInfo.getCommitId())
+                  println(commitInfoId)
+                  sh "git diff-tree --no-commit-id --name-only -r ${commitInfoId} > /tmp/change.txt"
                 }
             }
-            sh 'git diff-tree --no-commit-id --name-only -r ${env.GIT_COMMIT} > /tmp/change.txt'
-            sh 'sort /tmp/change.txt | uniq -u > /tmp/change.add.txt'
-            sh 'cat /tmp/change.add.txt'
+            sh "git diff-tree --no-commit-id --name-only -r ${env.GIT_COMMIT} > /tmp/change.txt"
+            sh "sort /tmp/change.txt | uniq -u > /tmp/change.add.txt"
+            sh "cat /tmp/change.add.txt"
         }
     }
 
