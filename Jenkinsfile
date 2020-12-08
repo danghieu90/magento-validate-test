@@ -12,7 +12,7 @@ pipeline {
     stage('init') {
       steps {
         sh 'pwd && whoami && id -u && id -g && composer global require hirak/prestissimo'
-        sh 'echo "GIT_COMMIT is ${env.GIT_COMMIT}"'
+        echo "GIT_COMMIT is ${env.GIT_COMMIT}"
         sh 'composer install'
       }
     }
