@@ -12,7 +12,6 @@ pipeline {
     stage('init') {
       steps {
         sh 'pwd && whoami && id -u && id -g && composer global require hirak/prestissimo'
-        echo "GIT_COMMIT is ${env.GIT_COMMIT}"
         sh 'composer install'
       }
     }
@@ -44,8 +43,11 @@ pipeline {
                   def commitInfo = commit.getCommitInfo()
                   println(commitInfo)
                   println(commitInfo.getCommitId())
+                  git diff-tree --no-commit-id --name-only -r commitInfo.getCommitId() > /tmp/change.txt
                 }
             }
+            git diff-tree --no-commit-id --name-only -r ${env.GIT_COMMIT} > /tmp/change.txt
+            cat /tmp/change.txt
         }
     }
 
