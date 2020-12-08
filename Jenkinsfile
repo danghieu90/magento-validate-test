@@ -11,8 +11,9 @@ pipeline {
   stages {
     stage('init') {
       steps {
-        sh 'pwd && whoami && id -u && id -g && composer global require hirak/prestissimo'
+        sh 'composer global require hirak/prestissimo'
         sh 'composer install'
+        sh 'composer require --dev phpro/grumphp'
       }
     }
 
