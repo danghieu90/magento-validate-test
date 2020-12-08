@@ -44,7 +44,6 @@ pipeline {
                   def commitInfo = commit.getCommitInfo()
                   def commitInfoId = commitInfo.getCommitId()
                   println(commitInfo)
-                  #println(commitInfoId)
                   sh "git diff-tree --no-commit-id --name-only -r ${commitInfoId} >> /tmp/change.txt"
                 }
             }
