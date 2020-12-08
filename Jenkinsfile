@@ -43,11 +43,12 @@ pipeline {
                   def commitInfo = commit.getCommitInfo()
                   println(commitInfo)
                   println(commitInfo.getCommitId())
-                  git diff-tree --no-commit-id --name-only -r commitInfo.getCommitId() > /tmp/change.txt
+                  sh 'git diff-tree --no-commit-id --name-only -r commitInfo.getCommitId() > /tmp/change.txt'
                 }
             }
-            git diff-tree --no-commit-id --name-only -r ${env.GIT_COMMIT} > /tmp/change.txt
-            cat /tmp/change.txt
+            sh 'git diff-tree --no-commit-id --name-only -r ${env.GIT_COMMIT} > /tmp/change.txt'
+            sh 'sort /tmp/change.txt | uniq -u > /tmp/change.add.txt'
+            sh 'cat /tmp/change.add.txt'
         }
     }
 
