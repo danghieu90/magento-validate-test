@@ -13,7 +13,7 @@ pipeline {
       steps {
         sh 'composer global require hirak/prestissimo'
         sh 'composer install'
-        sh 'composer require --dev phpro/grumphp'
+        sh 'COMPOSER_MEMORY_LIMIT=-1 composer require --dev phpro/grumphp'
       }
     }
 
