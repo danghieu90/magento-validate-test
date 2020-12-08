@@ -50,7 +50,7 @@ pipeline {
                 }
             }
             sh "cat /tmp/change.txt"
-            sh "sort /tmp/change.txt | uniq -u > /tmp/change.add.txt"
+            sh "sort /tmp/change.txt | uniq > /tmp/change.add.txt"
             sh "cat /tmp/change.add.txt"
         }
     }
