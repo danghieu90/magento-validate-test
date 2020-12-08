@@ -14,6 +14,7 @@ pipeline {
         sh 'COMPOSER_MEMORY_LIMIT=-1 composer global require hirak/prestissimo'
         sh 'COMPOSER_MEMORY_LIMIT=-1 composer install'
         sh 'COMPOSER_MEMORY_LIMIT=-1 composer require --dev phpro/grumphp'
+        sh 'cp -rf /codecheck/grumphp.yml  grumphp.yml'
       }
     }
 
@@ -50,6 +51,7 @@ pipeline {
             }
             sh "sort /tmp/change.txt | uniq > /tmp/change.add.txt"
             sh "cat /tmp/change.add.txt"
+            sh "cat /tmp/change.add.txt | grumphp run"
         }
     }
 
