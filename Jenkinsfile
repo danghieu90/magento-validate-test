@@ -12,6 +12,7 @@ pipeline {
     stage('init') {
       steps {
         sh 'pwd && whoami && id -u && id -g && composer global require hirak/prestissimo'
+        sh 'echo "GIT_COMMIT is ${env.GIT_COMMIT}"'
         sh 'composer install'
       }
     }
@@ -20,13 +21,13 @@ pipeline {
       parallel {
         stage('deploy') {
           steps {
-            sh 'php -dmemory_limit=2G bin/magento s:s:d -f -j=2'
+            sh '#php -dmemory_limit=2G bin/magento s:s:d -f -j=2'
           }
         }
 
         stage('compile') {
           steps {
-            sh 'php -dmemory_limit=2G bin/magento s:d:comp'
+            sh '#php -dmemory_limit=2G bin/magento s:d:comp'
           }
         }
 
