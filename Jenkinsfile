@@ -50,7 +50,7 @@ pipeline {
                 }
             }
             sh "sort /tmp/change.txt | uniq > /tmp/change.add.txt"
-            #sh "cat /tmp/change.add.txt | ~/.composer/vendor/bin/grumphp run"
+            sh "#cat /tmp/change.add.txt | ~/.composer/vendor/bin/grumphp run"
             sh 'bash codecheck file /tmp/change.add.txt'
         }
     }
