@@ -12,8 +12,9 @@ pipeline {
     stage('init') {
       steps {
         sh '#COMPOSER_MEMORY_LIMIT=-1 composer global require hirak/prestissimo'
-        sh 'composer install'
+        sh 'composer install --prefer-dist'
         sh '#COMPOSER_MEMORY_LIMIT=-1 composer global require --dev phpro/grumphp'
+        sh 'cp -rf /codecheck/grumphp.yml  grumphp.yml && mv /codecheck/dev dev'
       }
     }
 
@@ -49,7 +50,7 @@ pipeline {
                 }
             }
             sh "sort /tmp/change.txt | uniq > /tmp/change.add.txt"
-            sh "cat /tmp/change.add.txt | ~/.composer/vendor/bin/grumphp run --config='/codecheck/grumphp.yml'"
+            sh "cat /tmp/change.add.txt | ~/.composer/vendor/bin/grumphp run"
         }
     }
 
