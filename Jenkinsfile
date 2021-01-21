@@ -12,7 +12,7 @@ pipeline {
     stage('init') {
       steps {
         sh '#COMPOSER_MEMORY_LIMIT=-1 composer global require hirak/prestissimo'
-        sh 'composer require --prefer-dist phpstan/phpstan-deprecation-rules:0.12.4 bitexpert/phpstan-magento && git diff composer.json'
+        sh 'composer install --prefer-dist && composer require --prefer-dist phpstan/phpstan-deprecation-rules:0.12.4 && composer require --prefer-dist bitexpert/phpstan-magento && git diff composer.json'
         sh '#COMPOSER_MEMORY_LIMIT=-1 composer global require --dev phpro/grumphp'
         sh 'cp -rf /codecheck/grumphp.yml  grumphp.yml && cp -rf /codecheck/dev/* dev && cp -rf /codecheck/codecheck codecheck'
       }
