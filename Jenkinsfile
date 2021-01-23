@@ -12,12 +12,7 @@ pipeline {
     stage('init') {
       steps {
         sh 'composer install --prefer-dist && composer require --prefer-dist phpstan/phpstan-deprecation-rules:0.12.4 && composer require --prefer-dist bitexpert/phpstan-magento && git diff composer.json'
-        echo 'init 2'
-        sh '''
-            set +x
-            cp -rf /codecheck/grumphp.yml  grumphp.yml && cp -rf /codecheck/dev/* dev && cp -rf /codecheck/codecheck codecheck
-            set -x
-           '''
+        sh script:'cp -rf /codecheck/grumphp.yml  grumphp.yml && cp -rf /codecheck/dev/* dev && cp -rf /codecheck/codecheck codecheck', label:'some init step'
       }
     }
 
