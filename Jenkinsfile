@@ -55,27 +55,10 @@ pipeline {
         }
     }
 
-    stage('finish') {
-      parallel {
-        stage('clear dir') {
-          steps {
-            cleanWs(cleanWhenSuccess: true, cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true, disableDeferredWipeout: true)
-          }
-        }
-
-        stage('build url ') {
-          steps {
-            echo "blueocean build URL is ${env.RUN_DISPLAY_URL}"
-          }
-        }
-
-      }
-    }
-
     stage('test') {
       steps {
-        echo "build URL is ${env.BUILD_URL}"
-        echo "blueocean build URL is ${env.RUN_DISPLAY_URL}"
+        // echo "build URL is ${env.BUILD_URL}"
+        // echo "blueocean build URL is ${env.RUN_DISPLAY_URL}"
         // script {
         //   def userInput = input(message: 'Success or error ?',
         //     parameters: [[$class: 'ChoiceParameterDefinition',
@@ -90,6 +73,12 @@ pipeline {
         // }
       }
     }
-
   }
+  post {
+        always {
+            cleanWs(cleanWhenSuccess: true, cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true, disableDeferredWipeout: true)
+            echo "build URL is ${env.BUILD_URL}"
+            echo "blueocean build URL is ${env.RUN_DISPLAY_URL}"
+        }
+    }
 }
