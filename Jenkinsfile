@@ -14,7 +14,7 @@ pipeline {
     stage('init') {
       steps {
         setupTools()
-        // composerInstall()
+        composerInstall()
       }
     }
 
