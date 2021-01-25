@@ -13,8 +13,8 @@ pipeline {
   stages {
     stage('init') {
       steps {
-        setupTools
-        composerInstall
+        setupTools()
+        composerInstall()
       }
     }
 
@@ -38,7 +38,7 @@ pipeline {
     stage('check diff') {
         steps {
             script {
-                validateCode
+                validateCode()
             }
         }
     }
