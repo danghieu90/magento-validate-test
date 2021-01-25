@@ -15,6 +15,7 @@ pipeline {
       steps {
         setupTools()
         composerInstall()
+          sh 'git status'
       }
     }
 
