@@ -1,3 +1,5 @@
+@Library('codecheck')_
+
 pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '30'))
@@ -11,8 +13,8 @@ pipeline {
   stages {
     stage('init') {
       steps {
-        sh 'composer install --prefer-dist && composer require --prefer-dist phpstan/phpstan-deprecation-rules:0.12.4 && composer require --prefer-dist bitexpert/phpstan-magento && git diff composer.json'
-        sh script:'cp -rf /codecheck/grumphp.yml  grumphp.yml && cp -rf /codecheck/dev/* dev && cp -rf /codecheck/codecheck codecheck', label:'some init step'
+        setupTools
+        composerInstall
       }
     }
 
@@ -35,21 +37,9 @@ pipeline {
       
     stage('check diff') {
         steps {
-            sh "git diff-tree --no-commit-id --name-only -r ${env.GIT_COMMIT} >> /tmp/change.txt"
             script {
-                def publisher = LastChanges.getLastChangesPublisher "LAST_SUCCESSFUL_BUILD", "SIDE", "LINE", true, true, "", "", "", "", ""
-                publisher.publishLastChanges()
-                def changes = publisher.getLastChanges()
-                for (commit in changes.getCommits()) {
-                  def commitInfo = commit.getCommitInfo()
-                  def commitInfoId = commitInfo.getCommitId()
-                  println(commitInfo)
-                  sh "git diff-tree --no-commit-id --name-only -r ${commitInfoId} >> /tmp/change.txt"
-                }
+                validateCode
             }
-            sh "sort /tmp/change.txt | uniq > /tmp/change.add.txt"
-            sh "#cat /tmp/change.add.txt | ~/.composer/vendor/bin/grumphp run"
-            sh 'bash codecheck file /tmp/change.add.txt'
         }
     }
 
