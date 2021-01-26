@@ -19,7 +19,7 @@ pipeline {
     stage('init') {
       steps {
         setupTools()
-        composerInstall(${PHP})
+        composerInstall("${PHP}")
       }
     }
 
