@@ -6,7 +6,7 @@ pipeline {
   }
 
   environment {
-        PHP = 'php7.4'
+        PHP = 'php7.1'
     }
     
   agent {
