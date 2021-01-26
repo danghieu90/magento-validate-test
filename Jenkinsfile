@@ -4,12 +4,17 @@ pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '30'))
   }
+
+  environment {
+        PHP = 'php7.4'
+    }
+    
   agent {
     docker {
       image 'jenkin_codecheck:latest'
     }
-
   }
+    
   stages {
     stage('init') {
       steps {
